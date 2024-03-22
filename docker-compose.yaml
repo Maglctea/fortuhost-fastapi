@@ -1,0 +1,73 @@
+version: "3"
+
+services:
+
+  db:
+    image: postgres
+    expose:
+      - 5432
+    volumes:
+      - "db_data:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: .
+    depends_on:
+      - db
+    volumes:
+      - "./src/:/app/src"
+      - "./config:/app/config:ro"
+    command: bash -c 'cd src; python -m fortuhost'
+    expose:
+      - "8100"
+    ports:
+      - "8100:8100"
+    env_file:
+      - ".env"
+
+  redis:
+    image: redis:latest
+    volumes:
+      - redis_data-test:/root/redis
+    ports:
+      - "6379:6379"
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '1g'
+
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+      - URL_PREFIX=/redis_admin
+    ports:
+      - "8081:8081"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '1g'
+
+volumes:
+  db_data:
+  redis_data-test:
+    external: false

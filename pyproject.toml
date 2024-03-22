@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[project]
+dynamic = ["version"]
+name = "fortuhost"
+readme = "README.md"
+
+dependencies = [
+  "pydantic==2.6.1",
+  "pydantic[email]",
+  "pydantic-settings==2.2.0",
+  "psycopg==3.1.18",
+  "fastapi==0.109.2",
+  "alembic==1.13.1",
+  "asyncpg==0.29.0",
+  "python-multipart==0.0.9",
+  "hypercorn==0.16.0",
+  "SQLAlchemy==2.0.27",
+  "starlette-admin==0.13.2",
+  "babel==2.14.0",
+  "adaptix==3.0.0b2",
+  "uvicorn==0.27.1",
+  "python-jose==3.3.0",
+  "dishka==0.6.0",
+  "redis==5.0.3",
+  "celery==5.3.6",
+  "flower==2.0.1"
+]

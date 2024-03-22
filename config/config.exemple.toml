@@ -1,0 +1,31 @@
+[db]
+host = "localhost"
+port = 5432
+database = "postgesql"
+user = "postgesql"
+password = "postgesql"
+echo = true
+
+[redis]
+REDIS_HOST="127.0.0.1"
+REDIS_PORT=6379
+
+[celery]
+broker_url="redis://127.0.0.1:6379"
+result_backend_url="redis://127.0.0.1:6379"
+
+[api]
+host = "0.0.0.0"
+port = 8100
+debug = true
+
+[admin]
+host = "0.0.0.0"
+port = 8200
+debug = true
+secret_key = "super_secret_key"
+
+[auth]
+secret_key = "secret_key"
+algorithm = "HS256"
+token_expire_minutes = 60
