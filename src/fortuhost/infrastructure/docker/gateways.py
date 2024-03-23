@@ -8,28 +8,28 @@ from fortuhost.domain.dto.instance import InstanceId
 
 
 class DockerContainerGateway:
+    """
+        Class for control docker container
+    """
     def __init__(self, client: DockerClient) -> None:
         self._client = client
 
-    """
-    Class for control docker container
-    """
     timeout = 5
 
     def start(self, instance_id: InstanceId) -> None:
         """
-        Start a docker container
-        @param instance_id: container id. See 'docker ps' for get id
-        @return: None
+            Start a docker container
+            @param instance_id: container id. See 'docker ps' for get id
+            @return: None
         """
         container: Container = self._client.containers.get(instance_id)
         container.start()
 
     def stop(self, instance_id: InstanceId) -> None:
         """
-        Stop a docker container
-        @param instance_id: container id. See 'docker ps' for get id
-        @return: None
+            Stop a docker container
+            @param instance_id: container id. See 'docker ps' for get id
+            @return: None
         """
         container: Container = self._client.containers.get(instance_id)
         container.stop(timeout=self.timeout)
@@ -37,18 +37,18 @@ class DockerContainerGateway:
 
     def restart(self, instance_id: InstanceId) -> None:
         """
-        Restart a docker container
-        @param instance_id: container id. See 'docker ps' for get id
-        @return: None
+            Restart a docker container
+            @param instance_id: container id. See 'docker ps' for get id
+            @return: None
         """
         container: Container = self._client.containers.get(instance_id)
         container.restart(timeout=self.timeout)
 
     def delete(self, instance_id: InstanceId) -> None:
         """
-        Delete a docker container
-        @param instance_id: container id. See 'docker ps' for get id
-        @return: None
+            Delete a docker container
+            @param instance_id: container id. See 'docker ps' for get id
+            @return: None
         """
         container = self._client.containers.get(instance_id)
         container.stop(timeout=self.timeout)
@@ -56,9 +56,9 @@ class DockerContainerGateway:
 
     def get_logs_stream(self, instance_id: InstanceId) -> CancellableStream:
         """
-        Get iterator for viewing logs
-        @param instance_id: container id. See 'docker ps' for get id
-        @return: returns a sync iterator for viewing logs
+            Get iterator for viewing logs
+            @param instance_id: container id. See 'docker ps' for get id
+            @return: returns a sync iterator for viewing logs
         """
         container = self._client.containers.get(instance_id)
         return container.logs(
@@ -70,9 +70,9 @@ class DockerContainerGateway:
 
     def get_status(self, instance_id: InstanceId) -> str:
         """
-        Get the status of a docker container
-        @param instance_id: container id. See 'docker ps' for get id
-        @return: status of docker container
+            Get the status of a docker container
+            @param instance_id: container id. See 'docker ps' for get id
+            @return: status of docker container
         """
         container = self._client.containers.get(instance_id)
         return container.status
@@ -87,14 +87,14 @@ class DockerContainerGateway:
             network_id: str
     ) -> Container:
         """
-        Create a new container and mount it to the network
-        @param name: name of the container. Valid name mask: [a-zA-Z0-9.-]+
-        @param registry_url: address of the registry
-        @param image_name: name of the image in the registry
-        @param command: the command that is triggered every time you start.
-        @param env: dictionary of local variables
-        @param network_id: network ID. See 'docker network ls'
-        @return: None
+            Create a new container and mount it to the network
+            @param name: name of the container. Valid name mask: [a-zA-Z0-9.-]+
+            @param registry_url: address of the registry
+            @param image_name: name of the image in the registry
+            @param command: the command that is triggered every time you start.
+            @param env: dictionary of local variables
+            @param network_id: network ID. See 'docker network ls'
+            @return: None
         """
         container = self._client.containers.run(
             name=name,
