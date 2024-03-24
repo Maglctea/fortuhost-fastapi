@@ -10,7 +10,9 @@ from fortuhost.domain.dto.configs.api import APIConfig
 from fortuhost.infrastructure.di.config import APIConfigProvider, DBConfigProvider, AuthConfigProvider
 from fortuhost.infrastructure.di.db import DbProvider
 from fortuhost.infrastructure.di.gateway import GatewaysProvider
+from fortuhost.infrastructure.di.instance import InstanceProvider
 from fortuhost.infrastructure.di.interactor import InteractorProvider
+from fortuhost.infrastructure.di.services import ServiceProvider
 from fortuhost.presenter.api.routers.main import setup_controllers
 
 logger = logging.getLogger(__name__)
@@ -53,7 +55,9 @@ async def main() -> None:
             AuthConfigProvider(),
             DbProvider(),
             InteractorProvider(),
-            GatewaysProvider()
+            GatewaysProvider(),
+            InstanceProvider(),
+            ServiceProvider()
         ]
     )
 

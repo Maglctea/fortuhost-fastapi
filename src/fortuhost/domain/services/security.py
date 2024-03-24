@@ -40,3 +40,7 @@ def parse_jwt_token(
         algorithms=[algorithm],
     )
     return data
+
+
+def is_access(user, rules):
+    return True # TODO: implement this method
