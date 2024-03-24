@@ -4,7 +4,7 @@ from dishka.integrations.fastapi import inject, FromDishka
 from fastapi import Header, Response, status, HTTPException, APIRouter
 from fastapi.responses import JSONResponse
 
-from fortuhost.applications.account.interactors.auth import BaseLoginInteractor
+from fortuhost.applications.user.interactors.auth import BaseLoginInteractor
 from fortuhost.domain.exceptions.user import UserNotFoundException
 
 auth_router = APIRouter(

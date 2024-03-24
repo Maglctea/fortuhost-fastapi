@@ -6,24 +6,6 @@ from fortuhost.domain.dto.user.user import UserDTO
 from fortuhost.domain.services.security import hash_secret, generate_jwt_token
 
 
-class CreateAccountInteractor:
-    def __init__(
-            self,
-            user_gateway: IUserGateway,
-            unit_of_work: IUoW,
-    ) -> None:
-        self.user_gateway = user_gateway
-        self.unit_of_work = unit_of_work
-
-    async def __call__(
-            self,
-            account: UserDTO
-    ) -> None:
-        account.hashed_password = hash_secret(account.hashed_password)
-        await self.user_gateway.create_user(account)
-        await self.unit_of_work.commit()
-
-
 class BaseLoginInteractor:
     def __init__(
             self,
