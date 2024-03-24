@@ -2,3 +2,5 @@
 config/config.toml
 .idea
 fortuhost.egg-info
+
+__pycache__/

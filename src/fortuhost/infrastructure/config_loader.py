@@ -17,7 +17,10 @@ def load_config(
         config_scope: str | None = None,
 ) -> T:
 
-    path = os.getenv("MANAGER_DEALS_CONFIG_PATH", "/etc/manager_deals")
+    path = os.getenv("FORTUHOST_CONFIG_PATH")
+
+    if path is None:
+        raise Exception("FORTUHOST_CONFIG_PATH is not set in environment variables")
 
     data = read_toml(f"{path}/config.toml")
 
