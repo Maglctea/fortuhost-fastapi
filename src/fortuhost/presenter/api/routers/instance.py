@@ -2,11 +2,11 @@ from typing import Union, Annotated
 
 from dishka.integrations.fastapi import inject, FromDishka
 from fastapi import Response, status, HTTPException, APIRouter, Body, Header
-from fastapi.responses import JSONResponse
 
 from fortuhost.applications.instance.interactors import InstanceActionInteractor
 from fortuhost.domain.dto.instance import InstanceId
 from fortuhost.domain.exceptions.user import UserNotFoundException, AccessDeniedException
+from fortuhost.presenter.api.base import simple_api_response
 
 instance_router = APIRouter(
     tags=["Auth"],
@@ -16,8 +16,8 @@ instance_router = APIRouter(
 
 @instance_router.post(
     path='/action',
-    description='Gets a token for interacting with the site API',
-    response_description='JWT token for interacting with the site API',
+    description='Instance action (start/stop/restart)',
+    response_description='Simple response',
     response_model=None,
 )
 @inject
@@ -48,9 +48,4 @@ async def instance_action(
             headers={"WWW-Authenticate": "Bearer"}
         )
 
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={
-            "detail": 'Action completed'
-        }
-    )
+    return simple_api_response()

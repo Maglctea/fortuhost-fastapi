@@ -2,10 +2,10 @@ from typing import Union, Annotated
 
 from dishka.integrations.fastapi import inject, FromDishka
 from fastapi import Header, Response, status, HTTPException, APIRouter
-from fastapi.responses import JSONResponse
 
 from fortuhost.applications.user.interactors.auth import BaseLoginInteractor
 from fortuhost.domain.exceptions.user import UserNotFoundException
+from fortuhost.presenter.api.base import simple_api_response
 
 auth_router = APIRouter(
     tags=["Auth"],
@@ -37,13 +37,8 @@ async def login(
             password=password
         )
 
-        return JSONResponse(
-            status_code=status.HTTP_200_OK,
-            content={
-                "access_token": token,
-                "token_type": "bearer"
-            }
-        )
+        return simple_api_response(content={"access_token": token, "token_type": "bearer"})
+
     except UserNotFoundException:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

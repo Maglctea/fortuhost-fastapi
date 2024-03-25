@@ -43,4 +43,4 @@ def parse_jwt_token(
 
 
 def is_access(user, rules):
-    return True # TODO: implement this method
+    return True  # TODO: implement this method
