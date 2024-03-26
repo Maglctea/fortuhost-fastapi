@@ -5,6 +5,8 @@ database = "postgesql"
 user = "postgesql"
 password = "postgesql"
 echo = true
+driver = "asyncpg"
+db_type = "postgresql"
 
 [redis]
 REDIS_HOST="127.0.0.1"

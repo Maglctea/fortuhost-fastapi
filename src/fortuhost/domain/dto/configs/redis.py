@@ -3,6 +3,6 @@ from dataclasses import dataclass
 
 @dataclass
 class RedisConfig:
-    host: str = "localhost"
-    port: int = 6379
+    host: str
+    port: int
     password: str | None = None
