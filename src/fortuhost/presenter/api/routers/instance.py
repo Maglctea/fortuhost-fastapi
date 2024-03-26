@@ -2,7 +2,7 @@ from typing import Union, Annotated
 
 from dishka.integrations.fastapi import inject, FromDishka
 from fastapi import Response, status, HTTPException, APIRouter, Body, Header
-from starlette.responses import JSONResponse
+from fastapi.responses import JSONResponse
 
 from fortuhost.applications.instance.interactors import InstanceActionInteractor
 from fortuhost.domain.dto.instance import InstanceId
@@ -17,7 +17,7 @@ instance_router = APIRouter(
 @instance_router.post(
     path='/action',
     description='Instance action (start/stop/restart)',
-    response_description='Simple response',
+    response_description='Base response (detail: ok)',
     response_model=None,
 )
 @inject

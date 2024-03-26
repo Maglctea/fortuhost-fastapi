@@ -2,7 +2,7 @@ from typing import Union, Annotated
 
 from dishka.integrations.fastapi import inject, FromDishka
 from fastapi import Header, Response, status, HTTPException, APIRouter
-from starlette.responses import JSONResponse
+from fastapi.responses import JSONResponse
 
 from fortuhost.applications.user.interactors.auth import BaseLoginInteractor
 from fortuhost.domain.exceptions.user import UserNotFoundException
