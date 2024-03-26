@@ -16,8 +16,8 @@ instance_router = APIRouter(
 
 @instance_router.post(
     path='/action',
-    description='Gets a token for interacting with the site API',
-    response_description='JWT token for interacting with the site API',
+    description='Instance action (start/stop/restart)',
+    response_description='Base response (detail: ok)',
     response_model=None,
 )
 @inject
@@ -49,8 +49,6 @@ async def instance_action(
         )
 
     return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={
-            "detail": 'Action completed'
-        }
-    )
+            status_code=status.HTTP_200_OK,
+            content={"detail": "ok"}
+        )

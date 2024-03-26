@@ -39,11 +39,9 @@ async def login(
 
         return JSONResponse(
             status_code=status.HTTP_200_OK,
-            content={
-                "access_token": token,
-                "token_type": "bearer"
-            }
+            content={"access_token": token, "token_type": "bearer"}
         )
+
     except UserNotFoundException:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

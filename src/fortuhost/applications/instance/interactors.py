@@ -20,7 +20,7 @@ class InstanceActionInteractor:
             action: ActionTypeEnum | str
     ) -> None:
         user = await self.jwt_get_user_service(token)
-        if is_access(..., ...):  # TODO: implement this method
+        if is_access(user, ...):  # TODO: implement this method
             match action:
                 case ActionTypeEnum.START:
                     self.instance_gateway.start(instance_id)

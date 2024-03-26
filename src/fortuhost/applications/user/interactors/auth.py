@@ -2,7 +2,6 @@ from fortuhost.applications.interfaces.account import IUserGateway
 from fortuhost.applications.interfaces.uow import IUoW
 from fortuhost.domain.exceptions.user import UserNotFoundException
 from fortuhost.domain.dto.configs.auth import AuthConfig
-from fortuhost.domain.dto.user.user import UserDTO
 from fortuhost.domain.services.security import hash_secret, generate_jwt_token
 
 
