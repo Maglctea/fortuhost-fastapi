@@ -2,7 +2,7 @@ from fortuhost.applications.interfaces.account import IUserGateway
 from fortuhost.applications.interfaces.uow import IUoW
 from fortuhost.domain.exceptions.user import UserNotFoundException
 from fortuhost.domain.dto.configs.auth import AuthConfig
-from fortuhost.domain.services.security import hash_secret, generate_jwt_token
+from fortuhost.infrastructure.docker.auth.security import hash_secret, generate_jwt_token
 
 
 class BaseLoginInteractor:

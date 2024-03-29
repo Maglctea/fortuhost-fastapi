@@ -26,8 +26,9 @@ class DbProvider(Provider):
     async def get_session(
             self,
             session_factory: async_sessionmaker[AsyncSession]
-    ) -> AsyncSession:
-        return session_factory()
+    ) -> AsyncIterable[AsyncSession]:
+        async with session_factory() as session:
+            yield session
 
     uow = provide(
         source=UoW,

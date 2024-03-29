@@ -49,7 +49,6 @@ async def run_api(
 
 async def main() -> None:
     container = make_async_container(
-        *[
             APIConfigProvider(),
             DBConfigProvider(),
             AuthConfigProvider(),
@@ -58,7 +57,6 @@ async def main() -> None:
             GatewaysProvider(),
             InstanceProvider(),
             ServiceProvider()
-        ]
     )
 
     config = await container.get(APIConfig)
