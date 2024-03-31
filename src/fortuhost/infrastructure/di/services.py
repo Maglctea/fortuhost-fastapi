@@ -1,6 +1,6 @@
 from dishka import Provider, provide, Scope
 
-from fortuhost.infrastructure.docker.auth.access import JWTGetUserService
+from fortuhost.infrastructure.auth.access import JWTGetUserService
 
 
 class ServiceProvider(Provider):

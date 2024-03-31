@@ -1,7 +1,7 @@
-from fortuhost.infrastructure.docker.auth.access import JWTGetUserService
+from fortuhost.infrastructure.auth.access import JWTGetUserService
 from fortuhost.applications.interfaces.instance import IInstanceControlGateway
 from fortuhost.domain.dto.instance import InstanceId, ActionTypeEnum
-from fortuhost.infrastructure.docker.auth.security import is_access
+from fortuhost.infrastructure.auth import is_access
 
 
 class InstanceActionInteractor:
