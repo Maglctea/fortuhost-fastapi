@@ -1,7 +1,7 @@
 from dishka import Provider, Scope, provide
 
 from fortuhost.applications.interfaces.user import IUserGateway
-from fortuhost.applications.interfaces.instance import InstanceControlGateway, InstanceClient
+from fortuhost.applications.interfaces.instance import InstanceControlGateway, InstanceClient, InstanceTaskGateway
 from fortuhost.infrastructure.db.gateways.user.user import UserGateway
 from fortuhost.infrastructure.docker.gateways import DockerContainerGateway
 
