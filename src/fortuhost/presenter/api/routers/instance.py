@@ -5,8 +5,8 @@ from fastapi import Response, status, HTTPException, APIRouter, Body, Header
 from fastapi.responses import JSONResponse
 
 from fortuhost.applications.instance.interactors import InstanceActionInteractor
-from fortuhost.domain.dto.instance import InstanceId
-from fortuhost.domain.exceptions.user import UserNotFoundException, AccessDeniedException
+from fortuhost.domain.dto.instance import IdHex
+from fortuhost.domain.exceptions.user import UserNotFoundError, AccessDeniedError
 
 instance_router = APIRouter(
     tags=["Auth"],
@@ -27,7 +27,7 @@ async def instance_action(
             description='Access token',
             example='df4gdfg3ghj42dfg3r'
         ),
-        instance_id: InstanceId = Body(
+        instance_id: IdHex = Body(
             example='sxzf1sfadf1'
         ),
         action: str = Body(
@@ -41,7 +41,7 @@ async def instance_action(
             instance_id=instance_id,
             action=action,
         )
-    except (UserNotFoundException, AccessDeniedException):
+    except (UserNotFoundError, AccessDeniedError):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Invalid authorization data',

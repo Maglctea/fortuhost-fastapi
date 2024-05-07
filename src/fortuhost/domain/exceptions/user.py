@@ -5,9 +5,9 @@ class UserException(AppException):
     pass
 
 
-class UserNotFoundException(UserException):
+class UserNotFoundError(UserException):
     pass
 
 
-class AccessDeniedException(AppException):
+class AccessDeniedError(AppException):
     pass

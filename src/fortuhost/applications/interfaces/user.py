@@ -1,3 +1,4 @@
+from fortuhost.domain.dto.instance import IdHex
 from fortuhost.domain.dto.user.user import UserDTO
 
 

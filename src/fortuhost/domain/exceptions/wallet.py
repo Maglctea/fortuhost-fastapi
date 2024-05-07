@@ -1,0 +1,6 @@
+class PaymentException(Exception):
+    ...
+
+
+class InsufficientFundsError(PaymentException):
+    ...

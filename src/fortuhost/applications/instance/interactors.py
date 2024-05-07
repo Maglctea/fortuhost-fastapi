@@ -1,13 +1,13 @@
 from fortuhost.infrastructure.auth.access import JWTGetUserService
-from fortuhost.applications.interfaces.instance import IInstanceControlGateway
-from fortuhost.domain.dto.instance import InstanceId, ActionTypeEnum
-from fortuhost.infrastructure.auth import is_access
+from fortuhost.applications.interfaces.instance import InstanceControlGateway
+from fortuhost.domain.dto.instance import IdHex, ActionTypeEnum
+from fortuhost.infrastructure.auth.security import is_access
 
 
 class InstanceActionInteractor:
     def __init__(
             self,
-            instance_gateway: IInstanceControlGateway,
+            instance_gateway: InstanceControlGateway,
             jwt_get_user_service: JWTGetUserService
     ) -> None:
         self.instance_gateway = instance_gateway
@@ -16,7 +16,7 @@ class InstanceActionInteractor:
     async def __call__(
             self,
             token: str,
-            instance_id: InstanceId,
+            instance_id: IdHex,
             action: ActionTypeEnum | str
     ) -> None:
         user = await self.jwt_get_user_service(token)

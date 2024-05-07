@@ -1,8 +1,8 @@
-from fortuhost.applications.interfaces.account import IUserGateway
+from fortuhost.applications.interfaces.user import IUserGateway
 from fortuhost.applications.interfaces.uow import IUoW
-from fortuhost.domain.exceptions.user import UserNotFoundException
+from fortuhost.domain.exceptions.user import UserNotFoundError
 from fortuhost.domain.dto.configs.auth import AuthConfig
-from fortuhost.infrastructure.auth import hash_secret, generate_jwt_token
+from fortuhost.infrastructure.auth.security import hash_secret, generate_jwt_token
 
 
 class BaseLoginInteractor:
@@ -33,4 +33,4 @@ class BaseLoginInteractor:
                 )
                 return token
 
-        raise UserNotFoundException('The user with such private data was not found')
+        raise UserNotFoundError('The user with such private data was not found')

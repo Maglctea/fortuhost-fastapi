@@ -5,7 +5,7 @@ from fastapi import Header, Response, status, HTTPException, APIRouter
 from fastapi.responses import JSONResponse
 
 from fortuhost.applications.user.interactors.auth import BaseLoginInteractor
-from fortuhost.domain.exceptions.user import UserNotFoundException
+from fortuhost.domain.exceptions.user import UserNotFoundError
 
 auth_router = APIRouter(
     tags=["Auth"],
@@ -42,7 +42,7 @@ async def login(
             content={"access_token": token, "token_type": "bearer"}
         )
 
-    except UserNotFoundException:
+    except UserNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Invalid authorization data',

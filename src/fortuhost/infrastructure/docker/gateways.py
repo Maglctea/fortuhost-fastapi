@@ -4,19 +4,70 @@ from docker import DockerClient
 from docker.models.containers import Container
 from docker.types.daemon import CancellableStream
 
-from fortuhost.domain.dto.instance import InstanceId
+from fortuhost.domain.dto.instance import IdHex, InstanceDTO
+from fortuhost.domain.dto.project import ProjectDTO
+from fortuhost.domain.dto.user.user import UserDTO
+
+
+class InstanceClientGateway:
+    def __init__(self, client: DockerClient) -> None:
+        self._client = client
+
+    def get_instance(self, instance_id: IdHex) -> InstanceDTO:
+        container: Container = self._client.containers.get(container_id=instance_id)
+        return InstanceDTO(
+            id=container.id,
+            status=container.status
+        )
+
+    async def get_instance_project(self, instance_id: IdHex) -> ProjectDTO:
+        raise NotImplementedError  # TODO реализовать
+
+    async def get_instance_owner(self, instance_id: IdHex) -> UserDTO:
+        raise NotImplementedError  # TODO реализовать
+
+    def filter_instances(
+            self,
+            is_all: bool = True,
+            filters: dict = None
+    ) -> list[InstanceDTO]:
+        """
+         filters (dict): Filters to be processed on the image list.
+                Available filters:
+
+                - `exited` (int): Only containers with specified exit code
+                - `status` (str): One of ``restarting``, ``running``,
+                    ``paused``, ``exited``
+                - `label` (str|list): format either ``"key"``, ``"key=value"``
+                    or a list of such.
+                - `id` (str): The id of the container.
+                - `name` (str): The name of the container.
+                - `ancestor` (str): Filter by container ancestor. Format of
+                    ``<image-name>[:tag]``, ``<image-id>``, or
+                    ``<image@digest>``.
+                - `before` (str): Only containers created before a particular
+                    container. Give the container name or id.
+                - `since` (str): Only containers created after a particular
+                    container. Give container name or id.
+        """
+        containers = self._client.containers.list(
+            all=is_all,
+            filters=filters
+        )
+        return containers
 
 
 class DockerContainerGateway:
     """
         Class for control docker container
     """
+
     def __init__(self, client: DockerClient) -> None:
         self._client = client
 
     timeout = 5
 
-    def start(self, instance_id: InstanceId) -> None:
+    def start(self, instance_id: IdHex) -> None:
         """
             Start a docker container
             @param instance_id: container id. See 'docker ps' for get id
@@ -25,7 +76,7 @@ class DockerContainerGateway:
         container: Container = self._client.containers.get(instance_id)
         container.start()
 
-    def stop(self, instance_id: InstanceId) -> None:
+    def stop(self, instance_id: IdHex) -> None:
         """
             Stop a docker container
             @param instance_id: container id. See 'docker ps' for get id
@@ -35,7 +86,7 @@ class DockerContainerGateway:
         container.stop(timeout=self.timeout)
         container.wait()
 
-    def restart(self, instance_id: InstanceId) -> None:
+    def restart(self, instance_id: IdHex) -> None:
         """
             Restart a docker container
             @param instance_id: container id. See 'docker ps' for get id
@@ -44,7 +95,7 @@ class DockerContainerGateway:
         container: Container = self._client.containers.get(instance_id)
         container.restart(timeout=self.timeout)
 
-    def delete(self, instance_id: InstanceId) -> None:
+    def delete(self, instance_id: IdHex) -> None:
         """
             Delete a docker container
             @param instance_id: container id. See 'docker ps' for get id
@@ -54,7 +105,7 @@ class DockerContainerGateway:
         container.stop(timeout=self.timeout)
         container.remove()
 
-    def get_logs_stream(self, instance_id: InstanceId) -> CancellableStream:
+    def get_logs_stream(self, instance_id: IdHex) -> CancellableStream:
         """
             Get iterator for viewing logs
             @param instance_id: container id. See 'docker ps' for get id
@@ -68,7 +119,7 @@ class DockerContainerGateway:
             tail=300
         )
 
-    def get_status(self, instance_id: InstanceId) -> str:
+    def get_status(self, instance_id: IdHex) -> str:
         """
             Get the status of a docker container
             @param instance_id: container id. See 'docker ps' for get id

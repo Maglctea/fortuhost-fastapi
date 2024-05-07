@@ -1,9 +1,9 @@
 from jose import JWTError
 
-from fortuhost.applications.interfaces.account import IUserGateway
+from fortuhost.applications.interfaces.user import IUserGateway
 from fortuhost.domain.dto.configs.auth import AuthConfig
 from fortuhost.domain.dto.user.user import UserDTO
-from fortuhost.domain.exceptions.user import AccessDeniedException
+from fortuhost.domain.exceptions.user import AccessDeniedError
 from fortuhost.infrastructure.auth.security import parse_jwt_token
 
 
@@ -28,7 +28,7 @@ class JWTGetUserService:
                 algorithm=self.auth_config.algorithm
             )
         except JWTError:
-            raise AccessDeniedException('Invalid or expired token')
+            raise AccessDeniedError('Invalid or expired token')
 
         user = await self.user_gateway.get_user_by_id(token_data.get('user_id'))
         return user

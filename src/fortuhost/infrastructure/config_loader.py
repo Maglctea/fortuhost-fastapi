@@ -22,7 +22,7 @@ def load_config(
     if path is None:
         raise Exception("FORTUHOST_CONFIG_PATH is not set in environment variables")
 
-    data = read_toml(f"{path}/config.toml")
+    data = read_toml(path)
 
     if config_scope is not None:
         data = data[config_scope]
